@@ -199,3 +199,5 @@ node=web type=PATH msg=audit(1684507161.743:1106): item=0 name="nginx/nginx.conf
 node=web type=PROCTITLE msg=audit(1684507161.743:1106): proctitle=63686D6F64002B78006E67696E782F6E67696E782E636F6E66
 ```
 </details>
+
+позже добавлю с настройками через ансибл
