@@ -18,18 +18,18 @@ boxes = [
 ]
 # Provision each of the VMs.
 boxes.each do |opts|
-    config.vm.define opts[:name] do |config|
-      config.vm.hostname = opts[:name]
-      config.vm.network "private_network", ip: opts[:ip]
+      config.vm.define opts[:name] do |config|
+        config.vm.hostname = opts[:name]
+        config.vm.network "private_network", ip: opts[:ip]
 
-      if opts[:name] == boxes.last[:name]
-        config.vm.provision "ansible" do |ansible|
+        if opts[:name] == boxes.last[:name]
+          config.vm.provision "ansible" do |ansible|
           ansible.playbook = "ansible/provision.yml"
           ansible.inventory_path = "ansible/inventory"
           ansible.host_key_checking = "false"
           ansible.limit = "all"
-         end
-       end
+        end
+      end
     end
   end
 end
