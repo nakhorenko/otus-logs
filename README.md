@@ -200,4 +200,207 @@ node=web type=PROCTITLE msg=audit(1684507161.743:1106): proctitle=63686D6F64002B
 ```
 </details>
 
-позже добавлю с настройками через ансибл
+<details>
+  <summary>Так выглядит старт машины через ансибл</summary>
+
+```
+~/Linux2022-12/otus-logs$ vagrant up
+Bringing machine 'web' up with 'virtualbox' provider...
+Bringing machine 'log' up with 'virtualbox' provider...
+==> web: Importing base box 'centos/7'...
+==> web: Matching MAC address for NAT networking...
+==> web: Checking if box 'centos/7' version '2004.01' is up to date...
+==> web: Setting the name of the VM: otus-logs_web_1684832455915_69641
+==> web: Clearing any previously set network interfaces...
+==> web: Preparing network interfaces based on configuration...
+    web: Adapter 1: nat
+    web: Adapter 2: hostonly
+==> web: Forwarding ports...
+    web: 22 (guest) => 2222 (host) (adapter 1)
+==> web: Running 'pre-boot' VM customizations...
+==> web: Booting VM...
+==> web: Waiting for machine to boot. This may take a few minutes...
+    web: SSH address: 127.0.0.1:2222
+    web: SSH username: vagrant
+    web: SSH auth method: private key
+    web: 
+    web: Vagrant insecure key detected. Vagrant will automatically replace
+    web: this with a newly generated keypair for better security.
+    web: 
+    web: Inserting generated public key within guest...
+    web: Removing insecure key from the guest if it's present...
+    web: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> web: Machine booted and ready!
+==> web: Checking for guest additions in VM...
+    web: No guest additions were detected on the base box for this VM! Guest
+    web: additions are required for forwarded ports, shared folders, host only
+    web: networking, and more. If SSH fails on this machine, please install
+    web: the guest additions and repackage the box to continue.
+    web: 
+    web: This is not an error message; everything may continue to work properly,
+    web: in which case you may ignore this message.
+==> web: Setting hostname...
+==> web: Configuring and enabling network interfaces...
+==> web: Rsyncing folder: /home/nakhorenko/Linux2022-12/otus-logs/ => /vagrant
+==> log: Importing base box 'centos/7'...
+==> log: Matching MAC address for NAT networking...
+==> log: Checking if box 'centos/7' version '2004.01' is up to date...
+==> log: Setting the name of the VM: otus-logs_log_1684832494042_55780
+==> log: Fixed port collision for 22 => 2222. Now on port 2200.
+==> log: Clearing any previously set network interfaces...
+==> log: Preparing network interfaces based on configuration...
+    log: Adapter 1: nat
+    log: Adapter 2: hostonly
+==> log: Forwarding ports...
+    log: 22 (guest) => 2200 (host) (adapter 1)
+==> log: Running 'pre-boot' VM customizations...
+==> log: Booting VM...
+==> log: Waiting for machine to boot. This may take a few minutes...
+    log: SSH address: 127.0.0.1:2200
+    log: SSH username: vagrant
+    log: SSH auth method: private key
+    log: 
+    log: Vagrant insecure key detected. Vagrant will automatically replace
+    log: this with a newly generated keypair for better security.
+    log: 
+    log: Inserting generated public key within guest...
+    log: Removing insecure key from the guest if it's present...
+    log: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> log: Machine booted and ready!
+==> log: Checking for guest additions in VM...
+    log: No guest additions were detected on the base box for this VM! Guest
+    log: additions are required for forwarded ports, shared folders, host only
+    log: networking, and more. If SSH fails on this machine, please install
+    log: the guest additions and repackage the box to continue.
+    log: 
+    log: This is not an error message; everything may continue to work properly,
+    log: in which case you may ignore this message.
+==> log: Setting hostname...
+==> log: Configuring and enabling network interfaces...
+==> log: Rsyncing folder: /home/nakhorenko/Linux2022-12/otus-logs/ => /vagrant
+==> log: Running provisioner: ansible...
+    log: Running ansible-playbook...
+[WARNING]: While constructing a mapping from
+/home/nakhorenko/Linux2022-12/otus-logs/ansible/provision.yml, line 89, column
+7, found a duplicate dict key (tags). Using last defined value only.
+
+PLAY [NGINX | Install and configure NGINX] *************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.10]
+
+TASK [epel : NGINX | Install EPEL Repo package from standart repo] *************
+changed: [192.168.50.10]
+
+TASK [nginx : NGINX | Install NGINX package from EPEL Repo] ********************
+changed: [192.168.50.10]
+
+RUNNING HANDLER [nginx : restart nginx] ****************************************
+changed: [192.168.50.10]
+
+PLAY [Configure servers] *******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.10]
+ok: [192.168.50.15]
+
+TASK [Copy timezone to each other servers] *************************************
+changed: [192.168.50.15]
+changed: [192.168.50.10]
+
+TASK [restart chronyd] *********************************************************
+changed: [192.168.50.10]
+changed: [192.168.50.15]
+
+TASK [enable ports in rsyslog.conf of LOG server] ******************************
+skipping: [192.168.50.10]
+changed: [192.168.50.15]
+
+TASK [enable ports in rsyslog.conf of LOG server] ******************************
+skipping: [192.168.50.10]
+changed: [192.168.50.15]
+
+TASK [enable ports in rsyslog.conf of LOG server] ******************************
+skipping: [192.168.50.10]
+changed: [192.168.50.15]
+
+TASK [enable ports in rsyslog.conf of LOG server] ******************************
+skipping: [192.168.50.10]
+changed: [192.168.50.15]
+
+TASK [insert end of file] ******************************************************
+skipping: [192.168.50.10]
+changed: [192.168.50.15]
+
+TASK [restart rsyslogd] ********************************************************
+changed: [192.168.50.15]
+changed: [192.168.50.10]
+
+PLAY [Configure WEB server] ****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.10]
+
+TASK [edit nginx.conf error log] ***********************************************
+changed: [192.168.50.10]
+
+TASK [edit nginx.conf access log] **********************************************
+changed: [192.168.50.10]
+
+TASK [restart NGINX] ***********************************************************
+changed: [192.168.50.10]
+
+PLAY [Configure auditd] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.10]
+
+TASK [edit audit.rules] ********************************************************
+changed: [192.168.50.10]
+
+TASK [restart auditd] **********************************************************
+changed: [192.168.50.10]
+
+PLAY [install auditsd-plugins] *************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.10]
+
+TASK [audispd-plugins : AUDIT | Install audispd plugins] ***********************
+changed: [192.168.50.10]
+
+PLAY [edit auditd.conf] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.10]
+
+TASK [edit log format] *********************************************************
+ok: [192.168.50.10]
+
+TASK [edit name format] ********************************************************
+changed: [192.168.50.10]
+
+TASK [edit au-remote.conf] *****************************************************
+changed: [192.168.50.10]
+
+TASK [edit audisp-remote.conf] *************************************************
+changed: [192.168.50.10]
+
+TASK [restart auditd] **********************************************************
+changed: [192.168.50.10]
+
+PLAY [edit audit.conf on LOG Server] *******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [192.168.50.15]
+
+TASK [open 60 port] ************************************************************
+changed: [192.168.50.15]
+
+TASK [restart auditd] **********************************************************
+changed: [192.168.50.15]
+
+PLAY RECAP *********************************************************************
+192.168.50.10              : ok=23   changed=16   unreachable=0    failed=0    skipped=5    rescued=0    ignored=0   
+192.168.50.15              : ok=12   changed=10   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+</details>
